@@ -30,7 +30,7 @@ public class test {
 
     @Test
     public void testGetAll() {
-        System.out.println(LoginDao.getAll());
+        System.out.println(LoginDao.getAll(0));
     }
 
     @Test
