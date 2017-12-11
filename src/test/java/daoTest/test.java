@@ -2,6 +2,7 @@ package daoTest;
 
 import com.saltyfish.querytickets.dao.LoginDao;
 import com.saltyfish.querytickets.model.LoginEntity;
+import com.saltyfish.querytickets.service.LoginService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class test {
 
     @Autowired
     private LoginDao LoginDao;
+
+    @Autowired
+    private LoginService loginService;
 
 
     @Test
@@ -32,5 +36,10 @@ public class test {
     @Test
     public void testQueryByUsername(){
         System.out.println(LoginDao.queryByUsername("aaa"));
+    }
+
+    @Test
+    public void testLoginConfirm(){
+        System.out.println(loginService.loginConfirm("aa","aa"));
     }
 }
