@@ -14,6 +14,7 @@ import java.util.Map;
 
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/station")
 public class TrainStationController {
 
     @Autowired
