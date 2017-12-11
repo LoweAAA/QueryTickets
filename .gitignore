@@ -1,9 +1,11 @@
 # Lines that start with '#' are comments.
 # IntelliJ IDEA Project files
 .idea
+target
 *.iml
 *.ipr
 *.iws
+
 out
  
 # Eclipse Project files
