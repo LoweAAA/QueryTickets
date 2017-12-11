@@ -1,6 +1,6 @@
 package daoTest;
 
-import com.saltyfish.querytickets.dao.loginDao;
+import com.saltyfish.querytickets.dao.LoginDao;
 import com.saltyfish.querytickets.model.LoginEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class test {
 
     @Autowired
-    private loginDao loginDao;
+    private LoginDao LoginDao;
 
 
     @Test
@@ -21,11 +21,16 @@ public class test {
         LoginEntity loginEntity = new LoginEntity();
         loginEntity.setUsername("ccc");
         loginEntity.setPassword("ccc");
-        loginDao.add(loginEntity);
+        LoginDao.add(loginEntity);
     }
 
     @Test
     public void testGetAll() {
-        System.out.println(loginDao.getAll());
+        System.out.println(LoginDao.getAll());
+    }
+
+    @Test
+    public void testQueryByUsername(){
+        System.out.println(LoginDao.queryByUsername("aaa"));
     }
 }

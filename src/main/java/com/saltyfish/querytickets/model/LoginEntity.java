@@ -8,6 +8,7 @@ public class LoginEntity {
     private int id;
     private String username;
     private String password;
+    private String name;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -59,5 +60,25 @@ public class LoginEntity {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "name", nullable = true, length = 20)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
