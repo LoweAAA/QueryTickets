@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="QueryTickets:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="QueryTickets.war">
-      <element id="artifact" artifact-name="QueryTickets:war exploded" />
-    </root>
-  </artifact>
-</component>
