@@ -33,11 +33,11 @@ public interface LoginDao {
     public void update(LoginEntity loginEntity);
 
     /**
-     * 查询所有信息
+     * 查询所有普通用户信息
      *
      * @return
      */
-    public List<LoginEntity> getAll();
+    public List<LoginEntity> getAll(Integer type);
 
     /**
      * 获取登陆信息
