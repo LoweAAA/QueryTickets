@@ -9,6 +9,7 @@ public class LoginEntity {
     private String username;
     private String password;
     private String name;
+    private Integer type;//1为管理员，0为用户
 
     @Id
     @Column(name = "id", nullable = false)
@@ -72,6 +73,16 @@ public class LoginEntity {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "type", nullable = true)
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "LoginEntity{" +
@@ -79,6 +90,7 @@ public class LoginEntity {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
+                ", type=" + type +
                 '}';
     }
 }
