@@ -15,6 +15,6 @@ public class HibernateTools {
 	}
 
 	public Session getSession() {
-		return this.sessionFactory.openSession();
+		return this.sessionFactory.getCurrentSession();
 	}
 }

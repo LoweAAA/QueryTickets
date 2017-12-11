@@ -19,8 +19,8 @@ public class test {
     @Test
     public void testAdd() {
         LoginEntity loginEntity = new LoginEntity();
-        loginEntity.setUsername("bbb");
-        loginEntity.setPassword("bbb");
+        loginEntity.setUsername("ccc");
+        loginEntity.setPassword("ccc");
         loginDao.add(loginEntity);
     }
 

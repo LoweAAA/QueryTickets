@@ -15,11 +15,7 @@ public class loginDaoImpl extends HibernateTools implements loginDao {
     String hql = "";
 
     public void add(LoginEntity loginEntity) {
-        Session session= getSession();
-        Transaction transaction=session.beginTransaction();
-        session.save(loginEntity);
-        transaction.commit();
-        session.close();
+        getSession().save(loginEntity);
     }
 
     public List<LoginEntity> getAll() {
