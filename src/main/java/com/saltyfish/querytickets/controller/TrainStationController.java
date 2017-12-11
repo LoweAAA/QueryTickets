@@ -20,7 +20,7 @@ public class TrainStationController {
     @Autowired
     private TrainStationService trainStationService;
 
-    @RequestMapping
+    @RequestMapping("/getAll")
     @ResponseBody
     public Map getAll() {
         Map map = new HashMap();
