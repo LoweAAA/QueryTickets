@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property"
+                   default-cascade="none" default-lazy="true">
+    <class catalog="trainServer" dynamic-insert="false" dynamic-update="false"
+           mutable="true" name="com.saltyfish.querytickets.model.NormalQueryEntity" optimistic-lock="version"
+           polymorphism="implicit" select-before-update="false" table="normalQuery">
+        <composite-id class="com.saltyfish.querytickets.model.NormalQueryEntityId" mapped="false" name="id"
+                      unsaved-value="undefined">
+            <key-property name="number" type="java.lang.String">
+                <column name="number"/>
+            </key-property>
+            <key-property name="time" type="timestamp">
+                <column length="19" name="time"/>
+            </key-property>
+            <key-property name="station" type="java.lang.String">
+                <column name="station"/>
+            </key-property>
+            <key-property name="type" type="java.lang.Integer">
+                <column name="number"/>
+            </key-property>
+            <key-property name="money" type="java.lang.Integer">
+                <column name="number"/>
+            </key-property>
+            <key-property name="specialSeat" type="java.lang.Integer">
+                <column name="specialSeat"/>
+            </key-property>
+            <key-property name="firstSeat" type="java.lang.Integer">
+                <column name="firstSeat"/>
+            </key-property>
+            <key-property name="secondSeat" type="java.lang.Integer">
+                <column name="secondSeat"/>
+            </key-property>
+            <key-property name="softSeat" type="java.lang.Integer">
+                <column name="softSeat"/>
+            </key-property>
+            <key-property name="hardSeat" type="java.lang.Integer">
+                <column name="hardSeat"/>
+            </key-property>
+            <key-property name="noSeat" type="java.lang.Integer">
+                <column name="noSeat"/>
+            </key-property>
+            <key-property name="highSleeper" type="java.lang.Integer">
+                <column name="highSleeper"/>
+            </key-property>
+            <key-property name="softSleeper" type="java.lang.Integer">
+                <column name="softSleeper"/>
+            </key-property>
+            <key-property name="hardSleeper" type="java.lang.Integer">
+                <column name="hardSleeper"/>
+            </key-property>
+            <key-property name="distance" type="java.lang.Double">
+                <column name="distance"/>
+            </key-property>
+        </composite-id>
+
+    </class>
+</hibernate-mapping>
