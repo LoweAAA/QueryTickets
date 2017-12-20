@@ -2,7 +2,6 @@ package daoTest;
 
 import com.saltyfish.querytickets.dao.LoginDao;
 import com.saltyfish.querytickets.dao.NormalQueryDao;
-import com.saltyfish.querytickets.dao.TrainPassByStationsDao;
 import com.saltyfish.querytickets.model.LoginEntity;
 import com.saltyfish.querytickets.model.TrainEntity;
 import com.saltyfish.querytickets.model.TrainPassByStationsEntity;
@@ -26,8 +25,6 @@ public class test {
     private LoginDao LoginDao;
     @Autowired
     private NormalQueryDao normalQueryDao;
-    @Autowired
-    private TrainPassByStationsDao trainPassByStationsDao;
 
     @Autowired
     private LoginService loginService;
@@ -61,11 +58,4 @@ public class test {
         System.out.println(normalQueryDao.queryByStation("北京"));
     }
 
-    @Test
-    public void testGetAllStation(){
-        trainEntity.setNumber("D321");
-        trainPassByStationsEntity.setTrain(trainEntity);
-        System.out.println(trainPassByStationsEntity);
-        System.out.println(trainPassByStationsDao.getAll(trainEntity));
-    }
 }
