@@ -11,5 +11,31 @@ import java.util.List;
  */
 public interface TrainStationDao {
 
-    public List<TrainStationEntity> getAll();
+    /**
+     * 获取所有站点信息
+     *
+     * @return
+     */
+    List<TrainStationEntity> getAll();
+
+    /**
+     * 增加站点信息
+     *
+     * @param trainStationEntity
+     */
+    void add(TrainStationEntity trainStationEntity);
+
+    /**
+     * 删除站点
+     *
+     * @param id
+     */
+    void delete(Integer id);
+
+    /**
+     * 修改站点信息
+     *
+     * @param trainStationEntity
+     */
+    void update(TrainStationEntity trainStationEntity);
 }

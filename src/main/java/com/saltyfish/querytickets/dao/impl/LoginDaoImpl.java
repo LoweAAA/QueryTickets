@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public class LoginDaoImpl extends HibernateTools implements LoginDao {
 
-    String hql = "";
+    private String hql;
 
     public void add(LoginEntity loginEntity) {
         getSession().save(loginEntity);

@@ -10,10 +10,23 @@ import java.util.List;
 @Repository
 public class TrainStationDaoImpl extends HibernateTools implements TrainStationDao {
 
-    private String hql = "";
+    private String hql;
 
     public List<TrainStationEntity> getAll() {
         hql = "FROM TrainStationEntity";
         return getSession().createQuery(hql).list();
+    }
+
+    public void add(TrainStationEntity trainStationEntity) {
+        getSession().save(trainStationEntity);
+    }
+
+    public void delete(Integer id) {
+        hql="DELETE FROM TrainPassByStationsEntity t WHERE t.id = ?";
+        getSession().createQuery(hql).setParameter(0,id).executeUpdate();
+    }
+
+    public void update(TrainStationEntity trainStationEntity) {
+        getSession().update(trainStationEntity);
     }
 }

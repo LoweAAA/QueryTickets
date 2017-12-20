@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public class NormalQueryDaoImpl extends HibernateTools implements NormalQueryDao {
 
-    String hql;
+    private String hql;
 
     public List queryByStation(String station) {
         hql = "FROM NormalQueryEntity n WHERE n.id.station = ?";

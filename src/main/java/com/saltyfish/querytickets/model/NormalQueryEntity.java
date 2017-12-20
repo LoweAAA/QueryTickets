@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="normalQuery",catalog = "trainServer")
+@Table(name = "normalQuery", catalog = "trainServer")
 public class NormalQueryEntity implements Serializable {
 
     private static final long serialVersionUID = -7644680486096931393L;
@@ -23,7 +23,7 @@ public class NormalQueryEntity implements Serializable {
             @AttributeOverride(name = "time", column = @Column(name = "time")),
             @AttributeOverride(name = "station", column = @Column(name = "station")),
             @AttributeOverride(name = "type", column = @Column(name = "type")),
-            @AttributeOverride(name = "money", column = @Column (name = "money")),
+            @AttributeOverride(name = "money", column = @Column(name = "money")),
             @AttributeOverride(name = "specialSeat", column = @Column(name = "specialSeat")),
             @AttributeOverride(name = "firstSeat", column = @Column(name = "firstSeat")),
             @AttributeOverride(name = "secondSeat", column = @Column(name = "secondSeat")),
