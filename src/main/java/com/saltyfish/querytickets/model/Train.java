@@ -20,7 +20,7 @@ public class Train {
     private Integer softSleeper;
     private Integer hardSleeper;
     private Double money;
-    private String timeDifference;
+    private Date timeDifference;
     private Date startTime;
     private Date endTime;
     private Integer startType;
@@ -130,11 +130,11 @@ public class Train {
         this.money = money;
     }
 
-    public String getTimeDifference() {
+    public Date getTimeDifference() {
         return timeDifference;
     }
 
-    public void setTimeDifference(String timeDifference) {
+    public void setTimeDifference(Date timeDifference) {
         this.timeDifference = timeDifference;
     }
 
@@ -186,7 +186,7 @@ public class Train {
                 ", softSleeper=" + softSleeper +
                 ", hardSleeper=" + hardSleeper +
                 ", money=" + money +
-                ", timeDifference='" + timeDifference + '\'' +
+                ", timeDifference=" + timeDifference +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", startType=" + startType +

@@ -61,9 +61,13 @@ public class test {
         System.out.println(normalQueryDao.queryByStation("北京"));
     }
 
-    @Test
-    public void testNormalQueryService() {
-        System.out.println(normalQueryService.queryByStation("北京", "杭州"));
-    }
+//    @Test
+//    public void testNormalQueryService() {
+//        System.out.println(normalQueryService.queryByStation("北京", "杭州"));
+//    }
 
+    @Test
+    public void testOrderByMoney() {
+        System.out.println(normalQueryService.order("北京", "杭州","money"));
+    }
 }

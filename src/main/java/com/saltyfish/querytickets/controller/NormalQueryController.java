@@ -21,10 +21,9 @@ public class NormalQueryController {
 
     @RequestMapping("stationQuery")
     @ResponseBody
-    public Map<String, Object> stationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation) {
-        System.out.println(startStation + "," + endStation);
+    public Map<String, Object> stationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation, @RequestParam("orderBy") String orderBy) {
         Map<String, Object> map = new HashMap<>();
-        List list = normalQueryService.queryByStation(startStation, endStation);
+        List list = normalQueryService.order(startStation, endStation, orderBy);
         map.put("date", list);
         if (list.size() == 0) {
             map.put("status", 201);

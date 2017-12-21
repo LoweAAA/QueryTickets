@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NormalQueryServiceImpl implements NormalQueryService {
@@ -18,11 +17,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
     @Autowired
     private NormalQueryDao normalQueryDao;
 
-    private long nd = 1000 * 24 * 60 * 60;
-    private long nh = 1000 * 60 * 60;
-    private long nm = 1000 * 60;
-
-    public List queryByStation(String startStation, String endStation) {
+    private List queryByStation(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
         List end = normalQueryDao.queryByStation(endStation);
         List<Train> result = new ArrayList<>();
@@ -53,12 +48,16 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     train.setEndType(normalQueryEntity1.getId().getType());
 
                     long diff = normalQueryEntity1.getId().getTime().getTime() - normalQueryEntity.getId().getTime().getTime();
+                    long nd = 1000 * 24 * 60 * 60;
+                    long nh = 1000 * 60 * 60;
                     long hour = diff % nd / nh;
+                    long nm = 1000 * 60;
                     long min = diff % nd % nh / nm;
                     String time = hour + ":" + min;
-
                     try {
-                        train.setTimeDifference(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("HH:mm").parse(time)));
+                        Date date = new SimpleDateFormat("HH:mm").parse(time);
+                        train.setTimeDifference(date);
+                        System.out.println(date);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -68,5 +67,52 @@ public class NormalQueryServiceImpl implements NormalQueryService {
             }
         }
         return result;
+    }
+
+    public List order(String startStation, String endStation, String type) {
+        List list = queryByStation(startStation, endStation);
+        switch (type) {
+            case "money":
+                System.out.println("money");
+                Collections.sort(list, new Comparator<Train>() {
+                    @Override
+                    public int compare(Train o1, Train o2) {
+                        if (o1.getMoney() > o2.getMoney())
+                            return 1;
+                        if (o1.getMoney() < o2.getMoney())
+                            return -1;
+                        else
+                            return 0;
+                    }
+                });
+                break;
+            case "startTime":
+                System.out.println("startTime");
+                Collections.sort(list, new Comparator<Train>() {
+                    @Override
+                    public int compare(Train o1, Train o2) {
+                        return Integer.compare(o1.getStartTime().compareTo(o2.getStartTime()), 0);
+                    }
+                });
+                break;
+            case "endTime":
+                System.out.println("endTime");
+                Collections.sort(list, new Comparator<Train>() {
+                    @Override
+                    public int compare(Train o1, Train o2) {
+                        return Integer.compare(o1.getEndTime().compareTo(o2.getEndTime()), 0);
+                    }
+                });
+                break;
+            case "timeDifference":
+                System.out.println("timeDifference");
+                Collections.sort(list, new Comparator<Train>() {
+                    @Override
+                    public int compare(Train o1, Train o2) {
+                        return Integer.compare(o1.getTimeDifference().compareTo(o2.getTimeDifference()), 0);
+                    }
+                });
+        }
+        return list;
     }
 }
