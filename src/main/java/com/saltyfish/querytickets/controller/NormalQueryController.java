@@ -24,7 +24,7 @@ public class NormalQueryController {
     public Map<String, Object> stationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation, @RequestParam("orderBy") String orderBy) {
         Map<String, Object> map = new HashMap<>();
         List list = normalQueryService.order(startStation, endStation, orderBy);
-        map.put("date", list);
+        map.put("data", list);
         if (list.size() == 0) {
             map.put("status", 201);
         } else {
