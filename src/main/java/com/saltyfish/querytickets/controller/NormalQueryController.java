@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -20,11 +21,12 @@ public class NormalQueryController {
 
     @RequestMapping("stationQuery")
     @ResponseBody
-    public Map stationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation) {
+    public Map<String, Object> stationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation) {
         System.out.println(startStation + "," + endStation);
-        Map map = new HashMap();
-        map.put("date", normalQueryService.queryByStation(startStation, endStation));
-        if (map.isEmpty()) {
+        Map<String, Object> map = new HashMap<>();
+        List list = normalQueryService.queryByStation(startStation, endStation);
+        map.put("date", list);
+        if (list.size() == 0) {
             map.put("status", 201);
         } else {
             map.put("status", 200);
