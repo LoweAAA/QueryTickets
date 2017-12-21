@@ -1,8 +1,11 @@
 package com.saltyfish.querytickets.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Component
 @Entity
 @Table(name = "normalQuery", catalog = "trainServer")
 public class NormalQueryEntity implements Serializable {

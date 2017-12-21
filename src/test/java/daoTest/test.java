@@ -6,6 +6,7 @@ import com.saltyfish.querytickets.model.LoginEntity;
 import com.saltyfish.querytickets.model.TrainEntity;
 import com.saltyfish.querytickets.model.TrainPassByStationsEntity;
 import com.saltyfish.querytickets.service.LoginService;
+import com.saltyfish.querytickets.service.NormalQueryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class test {
 
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private NormalQueryService normalQueryService;
 
 
     @Test
@@ -56,6 +59,11 @@ public class test {
     @Test
     public void testQueryByStation() {
         System.out.println(normalQueryDao.queryByStation("北京"));
+    }
+
+    @Test
+    public void testNormalQueryService() {
+        System.out.println(normalQueryService.queryByStation("北京", "杭州"));
     }
 
 }

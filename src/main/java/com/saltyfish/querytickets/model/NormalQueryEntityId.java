@@ -1,10 +1,9 @@
 package com.saltyfish.querytickets.model;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Embeddable
 public class NormalQueryEntityId implements Serializable {
@@ -13,10 +12,10 @@ public class NormalQueryEntityId implements Serializable {
     private static final long serialVersionUID = -902035079933778172L;
 
     private String number;
-    private Timestamp time;
+    private Date time;
     private String station;
     private Integer type;
-    private Integer money;
+    private Double money;
     private Integer specialSeat;
     private Integer firstSeat;
     private Integer secondSeat;
@@ -31,7 +30,7 @@ public class NormalQueryEntityId implements Serializable {
     public NormalQueryEntityId() {
     }
 
-    public NormalQueryEntityId(String number, Timestamp time, String station, Integer type, Integer money, Integer specialSeat,
+    public NormalQueryEntityId(String number, Date time, String station, Integer type, Double money, Integer specialSeat,
                                Integer firstSeat, Integer secondSeat, Integer softSeat, Integer hardSeat, Integer noSeat, Integer highSleeper,
                                Integer softSleeper, Integer hardSleeper, Double distance) {
         this.number = number;
@@ -61,11 +60,11 @@ public class NormalQueryEntityId implements Serializable {
     }
 
     @Column(name = "time", nullable = true)
-    public Timestamp getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -88,11 +87,11 @@ public class NormalQueryEntityId implements Serializable {
     }
 
     @Column(name = "money", nullable = true)
-    public Integer getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

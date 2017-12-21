@@ -12,7 +12,7 @@
             <key-property name="number" type="java.lang.String">
                 <column name="number"/>
             </key-property>
-            <key-property name="time" type="timestamp">
+            <key-property name="time" type="java.util.Date">
                 <column length="19" name="time"/>
             </key-property>
             <key-property name="station" type="java.lang.String">
@@ -21,7 +21,7 @@
             <key-property name="type" type="java.lang.Integer">
                 <column name="number"/>
             </key-property>
-            <key-property name="money" type="java.lang.Integer">
+            <key-property name="money" type="java.lang.Double">
                 <column name="number"/>
             </key-property>
             <key-property name="specialSeat" type="java.lang.Integer">
