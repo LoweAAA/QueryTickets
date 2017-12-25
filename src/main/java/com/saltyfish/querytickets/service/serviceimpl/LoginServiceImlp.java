@@ -6,6 +6,8 @@ import com.saltyfish.querytickets.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LoginServiceImlp implements LoginService{
 
@@ -24,4 +26,24 @@ public class LoginServiceImlp implements LoginService{
         }
 
     }
+
+    public List getAccount(Integer type) {
+        return loginDao.getAll(type);
+    }
+
+    @Override
+    public void addAccount(LoginEntity loginEntity) {
+        loginDao.add(loginEntity);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        loginDao.delete(id);
+    }
+
+    @Override
+    public void update(LoginEntity loginEntity) {
+        loginDao.update(loginEntity);
+    }
+
 }

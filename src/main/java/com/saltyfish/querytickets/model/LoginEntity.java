@@ -1,10 +1,11 @@
 package com.saltyfish.querytickets.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "login", schema = "trainServer", catalog = "")
-public class LoginEntity {
+public class LoginEntity implements Serializable{
     private int id;
     private String username;
     private String password;
@@ -51,7 +52,6 @@ public class LoginEntity {
         if (id != that.id) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
-
         return true;
     }
 

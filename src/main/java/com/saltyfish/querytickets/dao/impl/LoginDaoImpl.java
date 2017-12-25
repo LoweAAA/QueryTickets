@@ -23,12 +23,11 @@ public class LoginDaoImpl extends HibernateTools implements LoginDao {
 
     public void delete(Integer id) {
         hql = "DELETE FROM LoginEntity l WHERE l.id = ?";
-        getSession().createQuery(hql).setParameter(0, id).list();
+        getSession().createQuery(hql).setParameter(0, id).executeUpdate();
     }
 
     public void update(LoginEntity loginEntity) {
-        hql = "UPDATE LoginEntity l SET l.password = ? , l.name = ?";
-        getSession().createQuery(hql).setParameter(0, loginEntity.getPassword()).setParameter(1, loginEntity.getName()).executeUpdate();
+        getSession().update(loginEntity);
     }
 
     public List<LoginEntity> getAll(Integer type) {
