@@ -15,4 +15,10 @@ public class NormalQueryDaoImpl extends HibernateTools implements NormalQueryDao
         hql = "FROM NormalQueryEntity n WHERE n.id.station = ?";
         return getSession().createQuery(hql).setParameter(0, station).list();
     }
+
+    @Override
+    public List queryByNumber(String number) {
+        hql="SELECT n.id.station FROM NormalQueryEntity n WHERE n.id.number = ?";
+        return getSession().createQuery(hql).setParameter(0,number).list();
+    }
 }

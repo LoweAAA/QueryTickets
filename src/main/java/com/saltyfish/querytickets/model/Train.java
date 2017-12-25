@@ -170,6 +170,30 @@ public class Train {
         this.endType = endType;
     }
 
+    public Train(String number, String start, String end, Integer specialSeat, Integer firstSeat, Integer secondSeat, Integer softSeat, Integer hardSeat, Integer noSeat, Integer highSleeper, Integer softSleeper, Integer hardSleeper, Double money, Date timeDifference, Date startTime, Date endTime, Integer startType, Integer endType) {
+        this.number = number;
+        this.start = start;
+        this.end = end;
+        this.specialSeat = specialSeat;
+        this.firstSeat = firstSeat;
+        this.secondSeat = secondSeat;
+        this.softSeat = softSeat;
+        this.hardSeat = hardSeat;
+        this.noSeat = noSeat;
+        this.highSleeper = highSleeper;
+        this.softSleeper = softSleeper;
+        this.hardSleeper = hardSleeper;
+        this.money = money;
+        this.timeDifference = timeDifference;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startType = startType;
+        this.endType = endType;
+    }
+
+    public Train() {
+    }
+
     @Override
     public String toString() {
         return "Train{" +

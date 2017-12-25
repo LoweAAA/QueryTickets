@@ -69,6 +69,11 @@ public class test {
         System.out.println(normalQueryService.order("北京", "杭州","money"));
     }
 
+    @Test
+    public void testQueryByNumber(){
+        System.out.println(normalQueryDao.queryByNumber("G564"));
+    }
+
 //    @Test
 //    public void testAddTrainPassByStation(){
 //        trainPassByStationsEntity.set

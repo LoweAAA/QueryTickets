@@ -16,4 +16,12 @@ public interface NormalQueryDao {
      * @return
      */
     List queryByStation(String station);
+
+    /**
+     * 根据车号查询
+     *
+     * @param number
+     * @return
+     */
+    List queryByNumber(String number);
 }

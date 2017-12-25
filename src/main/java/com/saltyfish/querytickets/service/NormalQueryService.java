@@ -13,4 +13,6 @@ public interface NormalQueryService {
      * @return
      */
     List order(String startStation, String endStation, String type);
+
+    List change(String startStation,String endStation);
 }

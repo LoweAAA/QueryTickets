@@ -115,4 +115,55 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         }
         return list;
     }
+
+    /**
+     * 未实现！
+     *
+     * @param startStation
+     * @param endStation
+     * @return
+     */
+    @Override
+    public List change(String startStation, String endStation) {
+        List start = normalQueryDao.queryByStation(startStation);
+        List end = normalQueryDao.queryByStation(endStation);
+        List<Train> result = new ArrayList<>();
+        for (int a = start.size(); a > 0; a--) {
+            NormalQueryEntity startNormalQueryEntity = (NormalQueryEntity) start.get(a - 1);
+            for (int b = end.size(); b > 0; b--) {
+                NormalQueryEntity endNormalQueryEntity = (NormalQueryEntity) end.get(b - 1);
+                if (startNormalQueryEntity.getId().getNumber().equals(endNormalQueryEntity.getId().getNumber()))
+                    continue;
+                List station1 = normalQueryDao.queryByNumber(startNormalQueryEntity.getId().getNumber());
+                List station2 = normalQueryDao.queryByNumber(endNormalQueryEntity.getId().getNumber());
+                for (int c = station1.size(); c > 0; c--) {
+                    for (int d = station2.size(); d > 0; d--) {
+                        String station3 = (String) station1.get(c - 1);
+                        String station4 = (String) station2.get(d - 1);
+                        if (station3.equals(station4)) {
+                            Train train = new Train();
+                            train.setNumber(startNormalQueryEntity.getId().getNumber());
+                            train.setFirstSeat(startNormalQueryEntity.getId().getFirstSeat());
+                            train.setHardSeat(startNormalQueryEntity.getId().getHardSeat());
+                            train.setHardSleeper(startNormalQueryEntity.getId().getHardSleeper());
+                            train.setHighSleeper(startNormalQueryEntity.getId().getHighSleeper());
+                            train.setMoney(startNormalQueryEntity.getId().getMoney() - startNormalQueryEntity.getId().getMoney());//
+                            train.setNoSeat(startNormalQueryEntity.getId().getNoSeat());
+                            train.setSecondSeat(startNormalQueryEntity.getId().getSecondSeat());
+                            train.setSoftSeat(startNormalQueryEntity.getId().getSoftSeat());
+                            train.setSoftSleeper(startNormalQueryEntity.getId().getSoftSleeper());
+                            train.setSpecialSeat(startNormalQueryEntity.getId().getSpecialSeat());
+                            train.setEnd(endStation);
+                            train.setStart(startStation);
+                            train.setEndTime(startNormalQueryEntity.getId().getTime());
+                            train.setStartTime(startNormalQueryEntity.getId().getTime());
+                            train.setStartType(startNormalQueryEntity.getId().getType());
+                            train.setEndType(startNormalQueryEntity.getId().getType());
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
