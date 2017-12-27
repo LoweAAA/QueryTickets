@@ -1,6 +1,7 @@
 package com.saltyfish.querytickets.dao.impl;
 
 import com.saltyfish.querytickets.dao.TrainStationDistanceDao;
+import com.saltyfish.querytickets.model.TrainStationDistanceEntity;
 import com.saltyfish.querytickets.model.TrainStationEntity;
 import com.saltyfish.querytickets.tools.HibernateTools;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,8 @@ public class TrainStationDistanceDaoImpl extends HibernateTools implements Train
     }
 
     @Override
-    public void add(TrainStationEntity trainStationEntity) {
-        getSession().save(trainStationEntity);
+    public void add(TrainStationDistanceEntity trainStationDistanceEntity) {
+        getSession().save(trainStationDistanceEntity);
     }
 
     @Override

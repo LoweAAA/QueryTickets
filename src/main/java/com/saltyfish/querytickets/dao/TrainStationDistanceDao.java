@@ -1,5 +1,6 @@
 package com.saltyfish.querytickets.dao;
 
+import com.saltyfish.querytickets.model.TrainStationDistanceEntity;
 import com.saltyfish.querytickets.model.TrainStationEntity;
 
 import java.util.List;
@@ -16,10 +17,9 @@ public interface TrainStationDistanceDao {
     /**
      * 增加两个站点之间距离
      *
-     * @param trainStationStart
      * @param trainStationEnd
      */
-    void add(TrainStationEntity trainStationEntity);
+    void add(TrainStationDistanceEntity trainStationDistanceEntity);
 
     /**
      * 删除两个站点之间距离
