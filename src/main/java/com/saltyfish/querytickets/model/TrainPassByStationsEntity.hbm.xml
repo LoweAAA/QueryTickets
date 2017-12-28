@@ -1,40 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
     <class name="com.saltyfish.querytickets.model.TrainPassByStationsEntity" table="trainPassByStations"
            schema="trainServer">
-
-        <id name="id" type="java.lang.Integer">
-            <column name="id"/>
-            <generator class="native"/>
-        </id>
-
-        <many-to-one name="train" class="com.saltyfish.querytickets.model.TrainEntity" lazy="false">
-            <column name="trainNumber"/>
-        </many-to-one>
-
-        <many-to-one name="station" class="com.saltyfish.querytickets.model.TrainStationEntity" lazy="false">
-            <column name="stationId"/>
-        </many-to-one>
-
-        <property name="time" type="java.util.Date">
-            <column name="time" not-null="true"/>
-        </property>
-
-        <property name="type" type="java.lang.Integer">
-            <column name="type" not-null="true"/>
-        </property>
-
-        <property name="money" type="java.lang.Integer">
-            <column name="money" not-null="true"/>
-        </property>
-
-        <property name="distance" type="java.lang.Double">
-            <column name="distance" precision="-1" not-null="true"/>
-        </property>
-
+        <id name="id" column="id"/>
+        <property name="trainNumber" column="trainNumber"/>
+        <property name="stationId" column="stationId"/>
+        <property name="time" column="time"/>
+        <property name="type" column="type"/>
+        <property name="money" column="money"/>
+        <property name="distance" column="distance"/>
     </class>
 </hibernate-mapping>

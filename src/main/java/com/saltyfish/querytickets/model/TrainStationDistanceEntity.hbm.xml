@@ -6,23 +6,13 @@
 
     <class name="com.saltyfish.querytickets.model.TrainStationDistanceEntity" table="trainStationDistance"
            schema="trainServer">
-
-        <id name="id" type="java.lang.Integer">
-            <column name="id"/>
-            <generator class="native"/>
-        </id>
-
-        <many-to-one name="start" class="com.saltyfish.querytickets.model.TrainStationEntity" lazy="false">
-            <column name="id"/>
+        <id name="id" column="id"/>
+        <property name="distance" column="distance"/>
+        <many-to-one name="trainStationByStart" class="com.saltyfish.querytickets.model.TrainStationEntity">
+            <column name="start"/>
         </many-to-one>
-
-        <many-to-one name="end" class="com.saltyfish.querytickets.model.TrainStationEntity" lazy="false">
-            <column name="id"/>
+        <many-to-one name="trainStationByEnd" class="com.saltyfish.querytickets.model.TrainStationEntity">
+            <column name="end"/>
         </many-to-one>
-
-        <property name="distance" type="java.lang.Double">
-            <column name="distance" precision="-1" not-null="true"/>
-        </property>
-
     </class>
 </hibernate-mapping>

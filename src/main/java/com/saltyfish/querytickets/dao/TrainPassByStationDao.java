@@ -2,6 +2,8 @@ package com.saltyfish.querytickets.dao;
 
 import com.saltyfish.querytickets.model.TrainPassByStationsEntity;
 
+import java.util.List;
+
 /**
  * 火车经过的站点的Dao
  *
@@ -29,4 +31,6 @@ public interface TrainPassByStationDao {
      * @param trainPassByStationsEntity
      */
     void update(TrainPassByStationsEntity trainPassByStationsEntity);
+
+    List getAll();
 }

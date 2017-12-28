@@ -5,6 +5,8 @@ import com.saltyfish.querytickets.model.TrainPassByStationsEntity;
 import com.saltyfish.querytickets.tools.HibernateTools;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TrainPassByStationDaoImpl extends HibernateTools implements TrainPassByStationDao {
 
@@ -21,6 +23,12 @@ public class TrainPassByStationDaoImpl extends HibernateTools implements TrainPa
 
     public void update(TrainPassByStationsEntity trainPassByStationsEntity) {
         getSession().update(trainPassByStationsEntity);
+    }
+
+    @Override
+    public List getAll() {
+        hql = "FROM TrainPassByStationsEntity";
+        return getSession().createQuery(hql).list();
     }
 
 }

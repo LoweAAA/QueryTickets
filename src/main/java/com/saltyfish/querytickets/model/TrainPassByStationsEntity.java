@@ -1,52 +1,65 @@
 package com.saltyfish.querytickets.model;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Date;
 
-import java.sql.Timestamp;
-
-@Component
+@Entity
+@javax.persistence.Table(name = "trainPassByStations", schema = "trainServer", catalog = "")
 public class TrainPassByStationsEntity {
+    private Integer id;
 
-    private int id;
-    private TrainEntity train;
-    private TrainStationEntity station;
-    private Timestamp time;
-    private Integer type;
-    private Integer money;
-    private Double distance;
-
-    public int getId() {
+    @Id
+    @javax.persistence.Column(name = "id")
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public TrainEntity getTrain() {
-        return train;
+    private String trainNumber;
+
+    @Basic
+    @javax.persistence.Column(name = "trainNumber")
+    public String getTrainNumber() {
+        return trainNumber;
     }
 
-    public void setTrain(TrainEntity train) {
-        this.train = train;
+    public void setTrainNumber(String trainNumber) {
+        this.trainNumber = trainNumber;
     }
 
-    public TrainStationEntity getStation() {
-        return station;
+    private Integer stationId;
+
+    @Basic
+    @javax.persistence.Column(name = "stationId")
+    public Integer getStationId() {
+        return stationId;
     }
 
-    public void setStation(TrainStationEntity station) {
-        this.station = station;
+    public void setStationId(Integer stationId) {
+        this.stationId = stationId;
     }
 
-    public Timestamp getTime() {
+    private Date time;
+
+    @Basic
+    @javax.persistence.Column(name = "time")
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
+    private Integer type;
+
+    @Basic
+    @javax.persistence.Column(name = "type")
     public Integer getType() {
         return type;
     }
@@ -55,14 +68,22 @@ public class TrainPassByStationsEntity {
         this.type = type;
     }
 
-    public Integer getMoney() {
+    private Double money;
+
+    @Basic
+    @javax.persistence.Column(name = "money")
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 
+    private Double distance;
+
+    @Basic
+    @javax.persistence.Column(name = "distance")
     public Double getDistance() {
         return distance;
     }
@@ -72,11 +93,41 @@ public class TrainPassByStationsEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TrainPassByStationsEntity that = (TrainPassByStationsEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (trainNumber != null ? !trainNumber.equals(that.trainNumber) : that.trainNumber != null) return false;
+        if (stationId != null ? !stationId.equals(that.stationId) : that.stationId != null) return false;
+        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (distance != null ? !distance.equals(that.distance) : that.distance != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (trainNumber != null ? trainNumber.hashCode() : 0);
+        result = 31 * result + (stationId != null ? stationId.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (distance != null ? distance.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "TrainPassByStationsEntity{" +
                 "id=" + id +
-                ", train=" + train +
-                ", station=" + station +
+                ", trainNumber='" + trainNumber + '\'' +
+                ", stationId=" + stationId +
                 ", time=" + time +
                 ", type=" + type +
                 ", money=" + money +

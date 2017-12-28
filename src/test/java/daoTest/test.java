@@ -3,9 +3,8 @@ package daoTest;
 import com.saltyfish.querytickets.dao.LoginDao;
 import com.saltyfish.querytickets.dao.NormalQueryDao;
 import com.saltyfish.querytickets.dao.TrainPassByStationDao;
-import com.saltyfish.querytickets.model.LoginEntity;
-import com.saltyfish.querytickets.model.TrainEntity;
-import com.saltyfish.querytickets.model.TrainPassByStationsEntity;
+import com.saltyfish.querytickets.dao.TrainStationDistanceDao;
+import com.saltyfish.querytickets.model.*;
 import com.saltyfish.querytickets.service.LoginService;
 import com.saltyfish.querytickets.service.NormalQueryService;
 import org.junit.Test;
@@ -14,15 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring-hibernate.xml")
 public class test {
 
     @Autowired
-    private TrainPassByStationsEntity trainPassByStationsEntity;
-    @Autowired
-    private TrainEntity trainEntity;
-
+    private TrainStationDistanceDao trainStationDistanceDao;
     @Autowired
     private LoginDao LoginDao;
     @Autowired
@@ -66,11 +65,11 @@ public class test {
 
     @Test
     public void testOrderByMoney() {
-        System.out.println(normalQueryService.order("北京", "杭州","money"));
+        System.out.println(normalQueryService.order("北京", "杭州", "money"));
     }
 
     @Test
-    public void testQueryByNumber(){
+    public void testQueryByNumber() {
         System.out.println(normalQueryDao.queryByNumber("G564"));
     }
 
@@ -79,4 +78,22 @@ public class test {
 //        trainPassByStationsEntity.set
 //        trainPassByStationDao.add(trainPassByStationsEntity);
 //    }
+
+    @Test
+    public void testStationGetAll() {
+        TrainStationDistanceEntity trainStationDistanceEntity = new TrainStationDistanceEntity();
+        TrainStationEntity trainStationEntity = new TrainStationEntity();
+        TrainStationEntity trainStationEntity2 = new TrainStationEntity();
+        trainStationEntity.setId(3);
+        trainStationEntity2.setId(4);
+        trainStationDistanceEntity.setTrainStationByStart(trainStationEntity);
+        trainStationDistanceEntity.setDistance(947.56);
+        trainStationDistanceEntity.setTrainStationByEnd(trainStationEntity2);
+        trainStationDistanceDao.add(trainStationDistanceEntity);
+    }
+
+    @Test
+    public void testtrainPassByStation() {
+        System.out.println(trainPassByStationDao.getAll());
+    }
 }

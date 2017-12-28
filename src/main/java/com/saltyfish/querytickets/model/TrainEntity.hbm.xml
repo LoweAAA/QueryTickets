@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.saltyfish.querytickets.model.TrainEntity" table="train" schema="trainServer">
+        <id name="id" column="id"/>
+        <property name="specialSeat" column="specialSeat"/>
+        <property name="firstSeat" column="firstSeat"/>
+        <property name="secondSeat" column="secondSeat"/>
+        <property name="softSeat" column="softSeat"/>
+        <property name="hardSeat" column="hardSeat"/>
+        <property name="noSeat" column="noSeat"/>
+        <property name="highSleeper" column="highSleeper"/>
+        <property name="softSleeper" column="softSleeper"/>
+        <property name="hardSleeper" column="hardSleeper"/>
+        <property name="number" column="number"/>
+    </class>
+</hibernate-mapping>
