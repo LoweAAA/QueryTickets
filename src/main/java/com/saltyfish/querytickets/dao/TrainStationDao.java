@@ -38,4 +38,6 @@ public interface TrainStationDao {
      * @param trainStationEntity
      */
     void update(TrainStationEntity trainStationEntity);
+
+    TrainStationEntity getByName(String name);
 }

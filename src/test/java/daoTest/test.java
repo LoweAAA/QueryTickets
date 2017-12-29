@@ -1,12 +1,10 @@
 package daoTest;
 
-import com.saltyfish.querytickets.dao.LoginDao;
-import com.saltyfish.querytickets.dao.NormalQueryDao;
-import com.saltyfish.querytickets.dao.TrainPassByStationDao;
-import com.saltyfish.querytickets.dao.TrainStationDistanceDao;
+import com.saltyfish.querytickets.dao.*;
 import com.saltyfish.querytickets.model.*;
 import com.saltyfish.querytickets.service.LoginService;
 import com.saltyfish.querytickets.service.NormalQueryService;
+import com.saltyfish.querytickets.service.StationDistanceService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,8 @@ import java.util.Date;
 @ContextConfiguration(locations = "classpath:spring-hibernate.xml")
 public class test {
 
+
+
     @Autowired
     private TrainStationDistanceDao trainStationDistanceDao;
     @Autowired
@@ -30,9 +30,15 @@ public class test {
     private TrainPassByStationDao trainPassByStationDao;
 
     @Autowired
+    private TrainStationDao trainStationDao;
+
+    @Autowired
     private LoginService loginService;
     @Autowired
     private NormalQueryService normalQueryService;
+
+    @Autowired
+    private StationDistanceService stationDistanceService;
 
 
     @Test
@@ -95,5 +101,15 @@ public class test {
     @Test
     public void testtrainPassByStation() {
         System.out.println(trainPassByStationDao.getAll());
+    }
+
+    @Test
+    public void testtrainstation() {
+        System.out.println(trainStationDao.getByName("上海").getStation());
+    }
+
+    @Test
+    public void testtdisadd() {
+        stationDistanceService.add(14,"上海","北京");
     }
 }

@@ -21,4 +21,19 @@ public class TrainStationServiceImpl implements TrainStationService {
         else
             return null;
     }
+
+    @Override
+    public void add(TrainStationEntity trainStationEntity) {
+        trainStationDao.add(trainStationEntity);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        trainStationDao.delete(id);
+    }
+
+    @Override
+    public void update(TrainStationEntity trainStationEntity) {
+        trainStationDao.update(trainStationEntity);
+    }
 }

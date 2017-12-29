@@ -22,11 +22,17 @@ public class TrainStationDaoImpl extends HibernateTools implements TrainStationD
     }
 
     public void delete(Integer id) {
-        hql="DELETE FROM TrainPassByStationsEntity t WHERE t.id = ?";
+        hql="DELETE FROM TrainStationEntity t WHERE t.id = ?";
         getSession().createQuery(hql).setParameter(0,id).executeUpdate();
     }
 
     public void update(TrainStationEntity trainStationEntity) {
         getSession().update(trainStationEntity);
+    }
+
+    @Override
+    public TrainStationEntity getByName(String name) {
+        hql="FROM TrainStationEntity g WHERE g.station=?";
+        return (TrainStationEntity)getSession().createQuery(hql).setParameter(0,name).uniqueResult();
     }
 }
