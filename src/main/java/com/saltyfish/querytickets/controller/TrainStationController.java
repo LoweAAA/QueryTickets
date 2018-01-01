@@ -21,12 +21,12 @@ public class TrainStationController {
     @Autowired
     private TrainStationService trainStationService;
 
-    @RequestMapping("/getAll")
+    @RequestMapping("/getall")
     @ResponseBody
     public Map getAll() {
         Map map = new HashMap();
         List<TrainStationEntity> trainStationEntities = trainStationService.getAll();
-        map.put("date", trainStationEntities);
+        map.put("data", trainStationEntities);
         if (trainStationEntities != null)
             map.put("status", 200);
         else
@@ -41,10 +41,10 @@ public class TrainStationController {
         try{
             trainStationService.delete(id);
             map.put("message","站点删除成功");
-            map.put("status","200");
+            map.put("status",200);
         }catch (Exception e){
             map.put("message","站点删除失败");
-            map.put("status","201");
+            map.put("status",201);
         }
         return map;
     }
@@ -59,10 +59,10 @@ public class TrainStationController {
         try{
             trainStationService.update(trainStationEntity);
             map.put("message","站点修改成功");
-            map.put("status","200");
+            map.put("status",200);
         }catch (Exception e){
             map.put("message","站点修改失败");
-            map.put("status","201");
+            map.put("status",201);
         }
         return map;
     }
@@ -75,11 +75,11 @@ public class TrainStationController {
         trainStationEntity.setStation(station);
         try{
             trainStationService.add(trainStationEntity);
-            map.put("message","站点距离添加成功");
-            map.put("status","200");
+            map.put("message","站点添加成功");
+            map.put("status",200);
         }catch (Exception e){
-            map.put("message","站点距离添加失败");
-            map.put("status","201");
+            map.put("message","站点添加失败");
+            map.put("status",201);
         }
         return map;
 

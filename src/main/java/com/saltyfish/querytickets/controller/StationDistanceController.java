@@ -29,7 +29,7 @@ public class StationDistanceController {
     public Map getAll() {
         Map map = new HashMap();
         List<TrainStationDistanceEntity> trainStationDistanceEntities = stationDistanceService.getAll();
-        map.put("date", trainStationDistanceEntities);
+        map.put("data", trainStationDistanceEntities);
         if (trainStationDistanceEntities != null)
             map.put("status", 200);
         else
@@ -43,10 +43,10 @@ public class StationDistanceController {
         try{
             stationDistanceService.add(distance,startStation,endStation);
             map.put("message","站点距离添加成功");
-            map.put("status","200");
+            map.put("status",200);
         }catch (Exception e){
             map.put("message","站点距离添加失败");
-            map.put("status","201");
+            map.put("status",201);
         }
         return map;
 
@@ -59,10 +59,10 @@ public class StationDistanceController {
         try{
             stationDistanceService.delete(id);
             map.put("message","站点距离删除成功");
-            map.put("status","200");
+            map.put("status",200);
         }catch (Exception e){
             map.put("message","站点距离删除失败");
-            map.put("status","201");
+            map.put("status",201);
         }
         return map;
     }
@@ -74,10 +74,10 @@ public class StationDistanceController {
         try{
             stationDistanceService.update(id,distance);
             map.put("message","站点距离修改成功");
-            map.put("status","200");
+            map.put("status",200);
         }catch (Exception e){
             map.put("message","站点距离修改失败");
-            map.put("status","201");
+            map.put("status",201);
         }
         return map;
     }
