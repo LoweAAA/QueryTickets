@@ -1,5 +1,6 @@
 package com.saltyfish.querytickets.dao;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,4 +25,6 @@ public interface NormalQueryDao {
      * @return
      */
     List queryByNumber(String number);
+
+    Date queryTime(String number, String station);
 }

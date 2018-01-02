@@ -1,6 +1,7 @@
 package com.saltyfish.querytickets.service.serviceimpl;
 
 import com.saltyfish.querytickets.dao.NormalQueryDao;
+import com.saltyfish.querytickets.model.ChangeTrain;
 import com.saltyfish.querytickets.model.NormalQueryEntity;
 import com.saltyfish.querytickets.model.Train;
 import com.saltyfish.querytickets.service.NormalQueryService;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class NormalQueryServiceImpl implements NormalQueryService {
@@ -17,7 +21,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
     @Autowired
     private NormalQueryDao normalQueryDao;
 
-    private List queryByStation(String startStation, String endStation) {
+    private List<Train> queryByStation(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
         List end = normalQueryDao.queryByStation(endStation);
         List<Train> result = new ArrayList<>();
@@ -27,7 +31,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
             for (int b = end.size() - 1; b > -1; b--) {
                 normalQueryEntity = (NormalQueryEntity) start.get(a);
                 normalQueryEntity1 = (NormalQueryEntity) end.get(b);
-                if (normalQueryEntity.getId().getNumber().equals(normalQueryEntity1.getId().getNumber()) && normalQueryEntity.getId().getType() <= normalQueryEntity1.getId().getType()) {
+                if (normalQueryEntity.getId().getNumber().equals(normalQueryEntity1.getId().getNumber()) && normalQueryEntity.getId().getTime().getTime() < normalQueryEntity1.getId().getTime().getTime()) {
                     Train train = new Train();
                     train.setNumber(normalQueryEntity.getId().getNumber());
                     train.setFirstSeat(normalQueryEntity.getId().getFirstSeat());
@@ -57,7 +61,6 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     try {
                         Date date = new SimpleDateFormat("HH:mm").parse(time);
                         train.setTimeDifference(date);
-                        System.out.println(date);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -69,101 +72,156 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         return result;
     }
 
-    public List order(String startStation, String endStation, String type) {
-        List list = queryByStation(startStation, endStation);
-        switch (type) {
-            case "money":
-                System.out.println("money");
-                Collections.sort(list, new Comparator<Train>() {
-                    @Override
-                    public int compare(Train o1, Train o2) {
-                        if (o1.getMoney() > o2.getMoney())
-                            return 1;
-                        if (o1.getMoney() < o2.getMoney())
-                            return -1;
-                        else
-                            return 0;
-                    }
-                });
-                break;
-            case "startTime":
-                System.out.println("startTime");
-                Collections.sort(list, new Comparator<Train>() {
-                    @Override
-                    public int compare(Train o1, Train o2) {
-                        return Integer.compare(o1.getStartTime().compareTo(o2.getStartTime()), 0);
-                    }
-                });
-                break;
-            case "endTime":
-                System.out.println("endTime");
-                Collections.sort(list, new Comparator<Train>() {
-                    @Override
-                    public int compare(Train o1, Train o2) {
-                        return Integer.compare(o1.getEndTime().compareTo(o2.getEndTime()), 0);
-                    }
-                });
-                break;
-            case "timeDifference":
-                System.out.println("timeDifference");
-                Collections.sort(list, new Comparator<Train>() {
-                    @Override
-                    public int compare(Train o1, Train o2) {
-                        return Integer.compare(o1.getTimeDifference().compareTo(o2.getTimeDifference()), 0);
-                    }
-                });
-        }
-        return list;
-    }
-
-    /**
-     * 未实现！
-     *
-     * @param startStation
-     * @param endStation
-     * @return
-     */
-    @Override
-    public List change(String startStation, String endStation) {
+    private List<String> changeQuery(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
         List end = normalQueryDao.queryByStation(endStation);
-        List<Train> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (int a = start.size(); a > 0; a--) {
             NormalQueryEntity startNormalQueryEntity = (NormalQueryEntity) start.get(a - 1);
             for (int b = end.size(); b > 0; b--) {
                 NormalQueryEntity endNormalQueryEntity = (NormalQueryEntity) end.get(b - 1);
-                if (startNormalQueryEntity.getId().getNumber().equals(endNormalQueryEntity.getId().getNumber()))
+                if (startNormalQueryEntity.getId().getNumber().equals(endNormalQueryEntity.getId().getNumber())) {
                     continue;
-                List station1 = normalQueryDao.queryByNumber(startNormalQueryEntity.getId().getNumber());
-                List station2 = normalQueryDao.queryByNumber(endNormalQueryEntity.getId().getNumber());
-                for (int c = station1.size(); c > 0; c--) {
-                    for (int d = station2.size(); d > 0; d--) {
-                        String station3 = (String) station1.get(c - 1);
-                        String station4 = (String) station2.get(d - 1);
-                        if (station3.equals(station4)) {
-                            Train train = new Train();
-                            train.setNumber(startNormalQueryEntity.getId().getNumber());
-                            train.setFirstSeat(startNormalQueryEntity.getId().getFirstSeat());
-                            train.setHardSeat(startNormalQueryEntity.getId().getHardSeat());
-                            train.setHardSleeper(startNormalQueryEntity.getId().getHardSleeper());
-                            train.setHighSleeper(startNormalQueryEntity.getId().getHighSleeper());
-                            train.setMoney(startNormalQueryEntity.getId().getMoney() - startNormalQueryEntity.getId().getMoney());//
-                            train.setNoSeat(startNormalQueryEntity.getId().getNoSeat());
-                            train.setSecondSeat(startNormalQueryEntity.getId().getSecondSeat());
-                            train.setSoftSeat(startNormalQueryEntity.getId().getSoftSeat());
-                            train.setSoftSleeper(startNormalQueryEntity.getId().getSoftSleeper());
-                            train.setSpecialSeat(startNormalQueryEntity.getId().getSpecialSeat());
-                            train.setEnd(endStation);
-                            train.setStart(startStation);
-                            train.setEndTime(startNormalQueryEntity.getId().getTime());
-                            train.setStartTime(startNormalQueryEntity.getId().getTime());
-                            train.setStartType(startNormalQueryEntity.getId().getType());
-                            train.setEndType(startNormalQueryEntity.getId().getType());
+                }
+                List train1 = normalQueryDao.queryByNumber(startNormalQueryEntity.getId().getNumber());
+                train1.sort((Comparator<NormalQueryEntity>) (o1, o2) -> Integer.compare(o1.getId().getTime().compareTo(o2.getId().getTime()), 0));
+                List train2 = normalQueryDao.queryByNumber(endNormalQueryEntity.getId().getNumber());
+                train2.sort((Comparator<NormalQueryEntity>) (o1, o2) -> Integer.compare(o1.getId().getTime().compareTo(o2.getId().getTime()), 0));
+                int sizeStart = 0;
+                for (int c = 0; c < train1.size(); c++) {
+                    NormalQueryEntity train = (NormalQueryEntity) train1.get(c);
+                    if (train.getId().getStation().equals(startStation)) {
+                        sizeStart = c;
+                        break;
+                    }
+                }
+                int sizeEnd = 0;
+                for (int c = 0; c < train2.size(); c++) {
+                    NormalQueryEntity train = (NormalQueryEntity) train2.get(c);
+                    if (train.getId().getStation().equals(endStation)) {
+                        sizeEnd = c;
+                        break;
+                    }
+                }
+                for (int size1 = sizeStart; size1 < train1.size(); size1++) {
+                    NormalQueryEntity train3 = (NormalQueryEntity) train1.get(size1);
+                    String station3 = train3.getId().getStation();
+                    long time1 = train3.getId().getTime().getTime();
+                    for (int size2 = sizeEnd; size2 >= 0; size2--) {
+                        NormalQueryEntity train4 = (NormalQueryEntity) train2.get(size2);
+                        String station4 = train4.getId().getStation();
+                        long time2 = train4.getId().getTime().getTime();
+                        if (station3.equals(station4) && !station3.equals(startStation) && !station3.equals(endStation) && time1 < time2) {
+                            result.add(train3.getId().getStation());
                         }
                     }
                 }
             }
         }
-        return null;
+        return result;
+    }
+
+    private List<ChangeTrain> changeTrainQuery(String startStation, String endStation, String changeStation) {
+        List<ChangeTrain> list = new ArrayList<>();
+        List<Train> startTrain = queryByStation(startStation, changeStation);
+        List<Train> endTrain = queryByStation(changeStation, endStation);
+        for (Object aStartTrain : startTrain) {
+            Train train1 = (Train) aStartTrain;
+            Date startDate = normalQueryDao.queryTime(train1.getNumber(), changeStation);
+            for (Object anEndTrain : endTrain) {
+                Train train2 = (Train) anEndTrain;
+                Date endDate = normalQueryDao.queryTime(train2.getNumber(), changeStation);
+                if (startDate.getTime() < endDate.getTime()) {
+                    ChangeTrain changeTrain = new ChangeTrain();
+                    changeTrain.setFirstNumber(train1.getNumber());
+                    changeTrain.setSecondNumber(train2.getNumber());
+                    changeTrain.setFirstStart(train1.getStartTime());
+                    changeTrain.setFirstEnd(train1.getEndTime());
+                    changeTrain.setSecondStart(train2.getStartTime());
+                    changeTrain.setSecondEnd(train2.getEndTime());
+                    changeTrain.setStartStation(train1.getStart());
+                    changeTrain.setStartStationType(train1.getStartType());
+                    changeTrain.setChangeStation(train1.getEnd());
+                    changeTrain.setFirstChangeType(train1.getEndType());
+                    changeTrain.setSecondChangeType(train2.getStartType());
+                    changeTrain.setEndStation(train2.getEnd());
+                    changeTrain.setEndStationType(train2.getEndType());
+                    changeTrain.setFirstTimeDifference(train1.getTimeDifference());
+                    changeTrain.setSecondTimeDifference(train2.getTimeDifference());
+                    long diff = startDate.getTime() - endDate.getTime();
+                    long nd = 1000 * 24 * 60 * 60;
+                    long nh = 1000 * 60 * 60;
+                    long hour = diff % nd / nh;
+                    long nm = 1000 * 60;
+                    long min = diff % nd % nh / nm;
+                    String time = hour + ":" + min;
+                    try {
+                        Date date = new SimpleDateFormat("HH:mm").parse(time);
+                        changeTrain.setDuringTime(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    changeTrain.setFirstFirst(train1.getFirstSeat());
+                    changeTrain.setFirstFirstMoney(train1.getMoney() * 1.5);
+                    changeTrain.setFirstSecond(train1.getSecondSeat());
+                    changeTrain.setFirstSecondMoney(train1.getMoney());
+                    changeTrain.setFirstBusiness(train1.getSpecialSeat());
+                    changeTrain.setFirstBusinessMoney(train1.getMoney() * 1.8);
+                    changeTrain.setSecondFirst(train2.getFirstSeat());
+                    changeTrain.setSecondFirstMoney(train2.getMoney() * 1.5);
+                    changeTrain.setSecondSecond(train1.getSecondSeat());
+                    changeTrain.setSecondSecondMoney(train2.getMoney());
+                    changeTrain.setSecondBusiness(train2.getSpecialSeat());
+                    changeTrain.setSecondBusinessMoney(train2.getMoney() * 1.8);
+                    list.add(changeTrain);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List order(String startStation, String endStation, String type) {
+        List<Train> list = queryByStation(startStation, endStation);
+        switch (type) {
+            case "money":
+                list.sort((o1, o2) -> {
+                    if (o1.getMoney() > o2.getMoney())
+                        return 1;
+                    if (o1.getMoney() < o2.getMoney())
+                        return -1;
+                    else
+                        return 0;
+                });
+                break;
+            case "startTime":
+                list.sort((o1, o2) -> Integer.compare(o1.getStartTime().compareTo(o2.getStartTime()), 0));
+                break;
+            case "endTime":
+                list.sort((o1, o2) -> Integer.compare(o1.getEndTime().compareTo(o2.getEndTime()), 0));
+                break;
+            case "timeDifference":
+                list.sort((o1, o2) -> Integer.compare(o1.getTimeDifference().compareTo(o2.getTimeDifference()), 0));
+        }
+        return list;
+    }
+
+    @Override
+    public List change(String startStation, String endStation) {
+        return changeQuery(startStation, endStation);
+    }
+
+    @Override
+    public List changeTrain(String startStation, String endStation, String changeStation) {
+        List<Object> list = new ArrayList<>();
+        if (changeStation.equals("")) {
+            List<String> stations = changeQuery(startStation, endStation);
+            for (Object object : stations) {
+                String station = (String) object;
+                list.add(changeTrainQuery(startStation, endStation, station));
+            }
+        } else {
+            list.add(changeTrainQuery(startStation, endStation, changeStation));
+        }
+        return list;
     }
 }

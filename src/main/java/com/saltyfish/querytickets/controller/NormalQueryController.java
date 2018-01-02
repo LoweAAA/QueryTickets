@@ -32,4 +32,32 @@ public class NormalQueryController {
         }
         return map;
     }
+
+    @RequestMapping("changestationquery")
+    @ResponseBody
+    public Map<String, Object> changeStationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation) {
+        Map<String, Object> map = new HashMap<>();
+        List list = normalQueryService.change(startStation, endStation);
+        map.put("data", list);
+        if (list.size() == 0) {
+            map.put("status", 201);
+        } else {
+            map.put("status", 200);
+        }
+        return map;
+    }
+
+    @RequestMapping("changetrainquery")
+    @ResponseBody
+    public Map<Object, Object> changeTrainQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation, @RequestParam("changeStation") String changeStation) {
+        Map<Object, Object> map = new HashMap<>();
+        List list = normalQueryService.changeTrain(startStation, endStation, changeStation);
+        map.put("data", list);
+        if (list.size() == 0) {
+            map.put("status", 201);
+        } else {
+            map.put("status", 200);
+        }
+        return map;
+    }
 }

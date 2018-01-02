@@ -19,7 +19,6 @@ import java.util.Date;
 public class test {
 
 
-
     @Autowired
     private TrainStationDistanceDao trainStationDistanceDao;
     @Autowired
@@ -110,6 +109,21 @@ public class test {
 
     @Test
     public void testtdisadd() {
-        stationDistanceService.add(14,"上海","北京");
+        stationDistanceService.add(14, "上海", "北京");
+    }
+
+    @Test
+    public void testChange() {
+        System.out.println(normalQueryService.change("杭州", "开化"));
+    }
+
+    @Test
+    public void testQueryTime() {
+        System.out.println(normalQueryDao.queryTime("D321", "龙游"));
+    }
+
+    @Test
+    public void testChangeTrain() {
+        System.out.println(normalQueryService.changeTrain("杭州", "开化", ""));
     }
 }
