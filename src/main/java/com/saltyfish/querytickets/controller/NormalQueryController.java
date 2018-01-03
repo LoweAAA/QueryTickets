@@ -38,10 +38,11 @@ public class NormalQueryController {
     public Map<String, Object> changeStationQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation) {
         Map<String, Object> map = new HashMap<>();
         List list = normalQueryService.change(startStation, endStation);
-        map.put("data", list);
         if (list.size() == 0) {
+            map.put("message","未查询到中间车站");
             map.put("status", 201);
         } else {
+            map.put("message", list);
             map.put("status", 200);
         }
         return map;
