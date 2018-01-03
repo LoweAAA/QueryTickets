@@ -121,67 +121,6 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         return result;
     }
 
-    private List<ChangeTrain> changeTrainQuery(String startStation, String endStation, String changeStation) {
-        List<ChangeTrain> list = new ArrayList<>();
-        List<Train> startTrain = queryByStation(startStation, changeStation);
-        List<Train> endTrain = queryByStation(changeStation, endStation);
-        for (Object aStartTrain : startTrain) {
-            Train train1 = (Train) aStartTrain;
-            Date startDate = normalQueryDao.queryTime(train1.getNumber(), changeStation);
-            for (Object anEndTrain : endTrain) {
-                Train train2 = (Train) anEndTrain;
-                Date endDate = normalQueryDao.queryTime(train2.getNumber(), changeStation);
-                if (startDate.getTime() < endDate.getTime()) {
-                    ChangeTrain changeTrain = new ChangeTrain();
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-                    changeTrain.setFirstNumber(train1.getNumber());
-                    changeTrain.setSecondNumber(train2.getNumber());
-                    changeTrain.setFirstStart(train1.getStartTime());
-                    changeTrain.setFirstEnd(train1.getEndTime());
-                    changeTrain.setSecondStart(train2.getStartTime());
-                    changeTrain.setSecondEnd(train2.getEndTime());
-                    changeTrain.setStartStation(train1.getStart());
-                    changeTrain.setStartStationType(train1.getStartType());
-                    changeTrain.setChangeStation(train1.getEnd());
-                    changeTrain.setFirstChangeType(train1.getEndType());
-                    changeTrain.setSecondChangeType(train2.getStartType());
-                    changeTrain.setEndStation(train2.getEnd());
-                    changeTrain.setEndStationType(train2.getEndType());
-                    changeTrain.setFirstTimeDifference(train1.getTimeDifference());
-                    changeTrain.setSecondTimeDifference(train2.getTimeDifference());
-                    long diff = startDate.getTime() - endDate.getTime();
-                    long nd = 1000 * 24 * 60 * 60;
-                    long nh = 1000 * 60 * 60;
-                    long hour = diff % nd / nh;
-                    long nm = 1000 * 60;
-                    long min = diff % nd % nh / nm;
-                    String time = hour + ":" + min;
-                    try {
-                        Date date = simpleDateFormat.parse(time);
-                        changeTrain.setSumTime(simpleDateFormat.parse(simpleDateFormat.format(train2.getEndTime().getTime() - train1.getStartTime().getTime())));
-                        changeTrain.setDuringTime(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    changeTrain.setFirstFirst(train1.getFirstSeat());
-                    changeTrain.setFirstFirstMoney(train1.getMoney() * 1.5);
-                    changeTrain.setFirstSecond(train1.getSecondSeat());
-                    changeTrain.setFirstSecondMoney(train1.getMoney());
-                    changeTrain.setFirstBusiness(train1.getSpecialSeat());
-                    changeTrain.setFirstBusinessMoney(train1.getMoney() * 1.8);
-                    changeTrain.setSecondFirst(train2.getFirstSeat());
-                    changeTrain.setSecondFirstMoney(train2.getMoney() * 1.5);
-                    changeTrain.setSecondSecond(train1.getSecondSeat());
-                    changeTrain.setSecondSecondMoney(train2.getMoney());
-                    changeTrain.setSecondBusiness(train2.getSpecialSeat());
-                    changeTrain.setSecondBusinessMoney(train2.getMoney() * 1.8);
-                    list.add(changeTrain);
-                }
-            }
-        }
-        return list;
-    }
-
     public List order(String startStation, String endStation, String type) {
         List<Train> list = queryByStation(startStation, endStation);
         switch (type) {
@@ -214,16 +153,80 @@ public class NormalQueryServiceImpl implements NormalQueryService {
 
     @Override
     public List changeTrain(String startStation, String endStation, String changeStation) {
-        List<Object> list = new ArrayList<>();
-        if (changeStation.equals("")) {
-            List<String> stations = changeQuery(startStation, endStation);
-            for (Object object : stations) {
-                String station = (String) object;
-                list.add(changeTrainQuery(startStation, endStation, station));
+        List list = new ArrayList<>();
+        try {
+            if (changeStation.equals("")) {
+                List<String> stations = changeQuery(startStation, endStation);
+                for (Object object : stations) {
+                    String station = (String) object;
+                    List<Train> startTrain = queryByStation(startStation, station);
+                    List<Train> endTrain = queryByStation(station, endStation);
+                    changeTrainQuery(station, list, startTrain, endTrain);
+                }
+            } else {
+                List<Train> startTrain = queryByStation(startStation, changeStation);
+                List<Train> endTrain = queryByStation(changeStation, endStation);
+                changeTrainQuery(changeStation, list, startTrain, endTrain);
             }
-        } else {
-            list.add(changeTrainQuery(startStation, endStation, changeStation));
+            list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getSumTime().compareTo(o2.getSumTime()), 0));
+            return list;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            list.add("err");
+            return list;
         }
-        return list;
+    }
+
+    private void changeTrainQuery(String changeStation, List list, List<Train> startTrain, List<Train> endTrain) throws ParseException {
+        for (Object aStartTrain : startTrain) {
+            Train train1 = (Train) aStartTrain;
+            Date startDate = normalQueryDao.queryTime(train1.getNumber(), changeStation);
+            for (Object anEndTrain : endTrain) {
+                Train train2 = (Train) anEndTrain;
+                Date endDate = normalQueryDao.queryTime(train2.getNumber(), changeStation);
+                if (startDate.getTime() < endDate.getTime()) {
+                    ChangeTrain changeTrain = new ChangeTrain();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                    changeTrain.setFirstNumber(train1.getNumber());
+                    changeTrain.setSecondNumber(train2.getNumber());
+                    changeTrain.setFirstStart(train1.getStartTime());
+                    changeTrain.setFirstEnd(train1.getEndTime());
+                    changeTrain.setSecondStart(train2.getStartTime());
+                    changeTrain.setSecondEnd(train2.getEndTime());
+                    changeTrain.setStartStation(train1.getStart());
+                    changeTrain.setStartStationType(train1.getStartType());
+                    changeTrain.setChangeStation(train1.getEnd());
+                    changeTrain.setFirstChangeType(train1.getEndType());
+                    changeTrain.setSecondChangeType(train2.getStartType());
+                    changeTrain.setEndStation(train2.getEnd());
+                    changeTrain.setEndStationType(train2.getEndType());
+                    changeTrain.setFirstTimeDifference(train1.getTimeDifference());
+                    changeTrain.setSecondTimeDifference(train2.getTimeDifference());
+                    long diff = startDate.getTime() - endDate.getTime();
+                    long nd = 1000 * 24 * 60 * 60;
+                    long nh = 1000 * 60 * 60;
+                    long hour = diff % nd / nh;
+                    long nm = 1000 * 60;
+                    long min = diff % nd % nh / nm;
+                    String time = hour + ":" + min;
+                    Date date = simpleDateFormat.parse(time);
+                    changeTrain.setSumTime(simpleDateFormat.parse(simpleDateFormat.format(train2.getEndTime().getTime() - train1.getStartTime().getTime())));
+                    changeTrain.setDuringTime(date);
+                    changeTrain.setFirstFirst(train1.getFirstSeat());
+                    changeTrain.setFirstFirstMoney(train1.getMoney() * 1.5);
+                    changeTrain.setFirstSecond(train1.getSecondSeat());
+                    changeTrain.setFirstSecondMoney(train1.getMoney());
+                    changeTrain.setFirstBusiness(train1.getSpecialSeat());
+                    changeTrain.setFirstBusinessMoney(train1.getMoney() * 1.8);
+                    changeTrain.setSecondFirst(train2.getFirstSeat());
+                    changeTrain.setSecondFirstMoney(train2.getMoney() * 1.5);
+                    changeTrain.setSecondSecond(train1.getSecondSeat());
+                    changeTrain.setSecondSecondMoney(train2.getMoney());
+                    changeTrain.setSecondBusiness(train2.getSpecialSeat());
+                    changeTrain.setSecondBusinessMoney(train2.getMoney() * 1.8);
+                    list.add(changeTrain);
+                }
+            }
+        }
     }
 }

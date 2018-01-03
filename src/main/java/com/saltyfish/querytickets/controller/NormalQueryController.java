@@ -52,10 +52,14 @@ public class NormalQueryController {
     public Map<Object, Object> changeTrainQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation, @RequestParam("changeStation") String changeStation) {
         Map<Object, Object> map = new HashMap<>();
         List list = normalQueryService.changeTrain(startStation, endStation, changeStation);
-        map.put("data", list);
         if (list.size() == 0) {
+            map.put("message", "未查询到中转车次");
             map.put("status", 201);
+        } else if (list.get(0).equals("err")) {
+            map.put("message", "系统错误");
+            map.put("status", 202);
         } else {
+            map.put("message", list);
             map.put("status", 200);
         }
         return map;
