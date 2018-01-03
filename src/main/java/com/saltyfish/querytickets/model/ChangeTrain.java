@@ -20,6 +20,7 @@ public class ChangeTrain {
     private Date firstTimeDifference;
     private Date secondTimeDifference;
     private Date duringTime;
+    private Date sumTime;
     private Integer firstFirst;
     private Integer firstSecond;
     private Integer firstBusiness;
@@ -127,6 +128,14 @@ public class ChangeTrain {
 
     public void setDuringTime(Date duringTime) {
         this.duringTime = duringTime;
+    }
+
+    public Date getSumTime() {
+        return sumTime;
+    }
+
+    public void setSumTime(Date sumTime) {
+        this.sumTime = sumTime;
     }
 
     public Integer getFirstFirst() {
@@ -276,6 +285,7 @@ public class ChangeTrain {
                 ", firstTimeDifference=" + firstTimeDifference +
                 ", secondTimeDifference=" + secondTimeDifference +
                 ", duringTime=" + duringTime +
+                ", sumTime=" + sumTime +
                 ", firstFirst=" + firstFirst +
                 ", firstSecond=" + firstSecond +
                 ", firstBusiness=" + firstBusiness +

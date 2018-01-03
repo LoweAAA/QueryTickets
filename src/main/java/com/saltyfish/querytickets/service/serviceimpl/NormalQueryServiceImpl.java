@@ -133,6 +133,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                 Date endDate = normalQueryDao.queryTime(train2.getNumber(), changeStation);
                 if (startDate.getTime() < endDate.getTime()) {
                     ChangeTrain changeTrain = new ChangeTrain();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
                     changeTrain.setFirstNumber(train1.getNumber());
                     changeTrain.setSecondNumber(train2.getNumber());
                     changeTrain.setFirstStart(train1.getStartTime());
@@ -156,7 +157,8 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     long min = diff % nd % nh / nm;
                     String time = hour + ":" + min;
                     try {
-                        Date date = new SimpleDateFormat("HH:mm").parse(time);
+                        Date date = simpleDateFormat.parse(time);
+                        changeTrain.setSumTime(simpleDateFormat.parse(simpleDateFormat.format(train2.getEndTime().getTime() - train1.getStartTime().getTime())));
                         changeTrain.setDuringTime(date);
                     } catch (ParseException e) {
                         e.printStackTrace();
