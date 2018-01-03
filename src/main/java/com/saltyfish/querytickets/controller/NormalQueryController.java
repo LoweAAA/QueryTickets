@@ -39,10 +39,10 @@ public class NormalQueryController {
         Map<String, Object> map = new HashMap<>();
         List list = normalQueryService.change(startStation, endStation);
         if (list.size() == 0) {
-            map.put("message","未查询到中间车站");
+            map.put("message", "未查询到中间车站");
             map.put("status", 201);
         } else {
-            map.put("message", list);
+            map.put("data", list);
             map.put("status", 200);
         }
         return map;
@@ -60,7 +60,7 @@ public class NormalQueryController {
             map.put("message", "系统错误");
             map.put("status", 202);
         } else {
-            map.put("message", list);
+            map.put("data", list);
             map.put("status", 200);
         }
         return map;
