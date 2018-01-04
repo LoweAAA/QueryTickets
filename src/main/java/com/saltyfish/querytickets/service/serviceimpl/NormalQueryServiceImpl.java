@@ -170,7 +170,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     return list;
                 default:
                     changeList(startStation, endStation, changeStation, list);
-                    list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getSumTime().compareTo(o2.getSumTime()), 0));
+                    list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getFirstStart().compareTo(o2.getFirstStart()), 0));
                     return list;
             }
         } catch (ParseException e) {
