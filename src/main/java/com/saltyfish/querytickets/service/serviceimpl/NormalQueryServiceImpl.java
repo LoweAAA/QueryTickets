@@ -22,7 +22,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
     @Autowired
     private NormalQueryDao normalQueryDao;
 
-    DecimalFormat df = new DecimalFormat("#.00");
+    DecimalFormat df = new DecimalFormat("#.0");
 
     private List<Train> queryByStation(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
