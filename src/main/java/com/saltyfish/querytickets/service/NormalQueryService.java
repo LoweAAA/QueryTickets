@@ -16,5 +16,5 @@ public interface NormalQueryService {
 
     List change(String startStation, String endStation);
 
-    List changeTrain(String startStation, String endStation, String changeStation);
+    List changeTrain(String startStation, String endStation, String changeStation, String order);
 }

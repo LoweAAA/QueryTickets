@@ -33,6 +33,24 @@ public class ChangeTrain {
     private Double secondFirstMoney;
     private Double secondSecondMoney;
     private Double secondBusinessMoney;
+    private Double sumDistance;
+    private Double sumMoney;
+
+    public Double getSumDistance() {
+        return sumDistance;
+    }
+
+    public void setSumDistance(Double sumDistance) {
+        this.sumDistance = sumDistance;
+    }
+
+    public Double getSumMoney() {
+        return sumMoney;
+    }
+
+    public void setSumMoney(Double sumMoney) {
+        this.sumMoney = sumMoney;
+    }
 
     public String getFirstNumber() {
         return firstNumber;
@@ -298,6 +316,8 @@ public class ChangeTrain {
                 ", secondFirstMoney=" + secondFirstMoney +
                 ", secondSecondMoney=" + secondSecondMoney +
                 ", secondBusinessMoney=" + secondBusinessMoney +
+                ", sumDistance=" + sumDistance +
+                ", sumMoney=" + sumMoney +
                 '}';
     }
 }

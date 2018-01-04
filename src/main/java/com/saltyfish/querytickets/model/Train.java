@@ -25,6 +25,15 @@ public class Train {
     private Date endTime;
     private Integer startType;
     private Integer endType;
+    private Double distance;
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
 
     public String getNumber() {
         return number;
@@ -215,6 +224,7 @@ public class Train {
                 ", endTime=" + endTime +
                 ", startType=" + startType +
                 ", endType=" + endType +
+                ", distance=" + distance +
                 '}';
     }
 }

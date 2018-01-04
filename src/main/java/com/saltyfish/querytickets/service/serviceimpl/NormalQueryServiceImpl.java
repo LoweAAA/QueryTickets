@@ -8,6 +8,7 @@ import com.saltyfish.querytickets.service.NormalQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class NormalQueryServiceImpl implements NormalQueryService {
 
     @Autowired
     private NormalQueryDao normalQueryDao;
+
+    DecimalFormat df = new DecimalFormat("#.00");
 
     private List<Train> queryByStation(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
@@ -38,7 +41,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     train.setHardSeat(normalQueryEntity.getId().getHardSeat());
                     train.setHardSleeper(normalQueryEntity.getId().getHardSleeper());
                     train.setHighSleeper(normalQueryEntity.getId().getHighSleeper());
-                    train.setMoney(normalQueryEntity1.getId().getMoney() - normalQueryEntity.getId().getMoney());
+                    train.setMoney(Double.valueOf(df.format(normalQueryEntity1.getId().getMoney() - normalQueryEntity.getId().getMoney())));
                     train.setNoSeat(normalQueryEntity.getId().getNoSeat());
                     train.setSecondSeat(normalQueryEntity.getId().getSecondSeat());
                     train.setSoftSeat(normalQueryEntity.getId().getSoftSeat());
@@ -50,6 +53,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     train.setStartTime(normalQueryEntity.getId().getTime());
                     train.setStartType(normalQueryEntity.getId().getType());
                     train.setEndType(normalQueryEntity1.getId().getType());
+                    train.setDistance(normalQueryEntity1.getId().getDistance() - normalQueryEntity.getId().getDistance());
 
                     long diff = normalQueryEntity1.getId().getTime().getTime() - normalQueryEntity.getId().getTime().getTime();
                     long nd = 1000 * 24 * 60 * 60;
@@ -152,28 +156,43 @@ public class NormalQueryServiceImpl implements NormalQueryService {
     }
 
     @Override
-    public List changeTrain(String startStation, String endStation, String changeStation) {
+    public List changeTrain(String startStation, String endStation, String changeStation, String order) {
         List list = new ArrayList<>();
         try {
-            if (changeStation.equals("")) {
-                List<String> stations = changeQuery(startStation, endStation);
-                for (Object object : stations) {
-                    String station = (String) object;
-                    List<Train> startTrain = queryByStation(startStation, station);
-                    List<Train> endTrain = queryByStation(station, endStation);
-                    changeTrainQuery(station, list, startTrain, endTrain);
-                }
-            } else {
-                List<Train> startTrain = queryByStation(startStation, changeStation);
-                List<Train> endTrain = queryByStation(changeStation, endStation);
-                changeTrainQuery(changeStation, list, startTrain, endTrain);
+            switch (order) {
+                case "money":
+                    changeList(startStation, endStation, changeStation, list);
+                    list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getSumMoney().compareTo(o2.getSumMoney()), 0));
+                    return list;
+                case "distance":
+                    changeList(startStation, endStation, changeStation, list);
+                    list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getSumDistance().compareTo(o2.getSumDistance()), 0));
+                    return list;
+                default:
+                    changeList(startStation, endStation, changeStation, list);
+                    list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getSumTime().compareTo(o2.getSumTime()), 0));
+                    return list;
             }
-            list.sort((Comparator<ChangeTrain>) (o1, o2) -> Integer.compare(o1.getSumTime().compareTo(o2.getSumTime()), 0));
-            return list;
         } catch (ParseException e) {
             e.printStackTrace();
             list.add("err");
             return list;
+        }
+    }
+
+    private void changeList(String startStation, String endStation, String changeStation, List list) throws ParseException {
+        if (changeStation.equals("")) {
+            List<String> stations = changeQuery(startStation, endStation);
+            for (Object object : stations) {
+                String station = (String) object;
+                List<Train> startTrain = queryByStation(startStation, station);
+                List<Train> endTrain = queryByStation(station, endStation);
+                changeTrainQuery(station, list, startTrain, endTrain);
+            }
+        } else {
+            List<Train> startTrain = queryByStation(startStation, changeStation);
+            List<Train> endTrain = queryByStation(changeStation, endStation);
+            changeTrainQuery(changeStation, list, startTrain, endTrain);
         }
     }
 
@@ -202,6 +221,8 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     changeTrain.setEndStationType(train2.getEndType());
                     changeTrain.setFirstTimeDifference(train1.getTimeDifference());
                     changeTrain.setSecondTimeDifference(train2.getTimeDifference());
+                    changeTrain.setSumMoney(train1.getMoney() + train2.getMoney());
+                    changeTrain.setSumDistance(train1.getDistance() + train2.getDistance());
                     long diff = startDate.getTime() - endDate.getTime();
                     long nd = 1000 * 24 * 60 * 60;
                     long nh = 1000 * 60 * 60;
@@ -213,17 +234,17 @@ public class NormalQueryServiceImpl implements NormalQueryService {
                     changeTrain.setSumTime(simpleDateFormat.parse(simpleDateFormat.format(train2.getEndTime().getTime() - train1.getStartTime().getTime())));
                     changeTrain.setDuringTime(date);
                     changeTrain.setFirstFirst(train1.getFirstSeat());
-                    changeTrain.setFirstFirstMoney(train1.getMoney() * 1.5);
+                    changeTrain.setFirstFirstMoney(Double.valueOf(df.format(train1.getMoney() * 1.5)));
                     changeTrain.setFirstSecond(train1.getSecondSeat());
-                    changeTrain.setFirstSecondMoney(train1.getMoney());
+                    changeTrain.setFirstSecondMoney(Double.valueOf(df.format(train1.getMoney())));
                     changeTrain.setFirstBusiness(train1.getSpecialSeat());
-                    changeTrain.setFirstBusinessMoney(train1.getMoney() * 1.8);
+                    changeTrain.setFirstBusinessMoney(Double.valueOf(df.format(train1.getMoney() * 1.8)));
                     changeTrain.setSecondFirst(train2.getFirstSeat());
-                    changeTrain.setSecondFirstMoney(train2.getMoney() * 1.5);
+                    changeTrain.setSecondFirstMoney(Double.valueOf(df.format(train2.getMoney() * 1.5)));
                     changeTrain.setSecondSecond(train1.getSecondSeat());
-                    changeTrain.setSecondSecondMoney(train2.getMoney());
+                    changeTrain.setSecondSecondMoney(Double.valueOf(df.format(train2.getMoney())));
                     changeTrain.setSecondBusiness(train2.getSpecialSeat());
-                    changeTrain.setSecondBusinessMoney(train2.getMoney() * 1.8);
+                    changeTrain.setSecondBusinessMoney(Double.valueOf(df.format(train2.getMoney() * 1.8)));
                     list.add(changeTrain);
                 }
             }

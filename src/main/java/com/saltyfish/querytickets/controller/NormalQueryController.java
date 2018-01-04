@@ -50,9 +50,9 @@ public class NormalQueryController {
 
     @RequestMapping("changetrainquery")
     @ResponseBody
-    public Map<Object, Object> changeTrainQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation, @RequestParam("changeStation") String changeStation) {
+    public Map<Object, Object> changeTrainQuery(@RequestParam("startStation") String startStation, @RequestParam("endStation") String endStation, @RequestParam("changeStation") String changeStation, @RequestParam("order") String order) {
         Map<Object, Object> map = new HashMap<>();
-        List list = normalQueryService.changeTrain(startStation, endStation, changeStation);
+        List list = normalQueryService.changeTrain(startStation, endStation, changeStation, order);
         if (list.size() == 0) {
             map.put("message", "未查询到中转车次");
             map.put("status", 201);
