@@ -126,4 +126,6 @@ public class test {
     public void testChangeTrain() {
         System.out.println(normalQueryService.changeTrain("杭州", "开化", "", ""));
     }
+
+
 }

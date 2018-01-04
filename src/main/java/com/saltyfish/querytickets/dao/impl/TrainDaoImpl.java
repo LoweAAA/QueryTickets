@@ -25,8 +25,8 @@ public class TrainDaoImpl extends HibernateTools implements TrainDao {
         getSession().update(trainEntity);
     }
 
-    public List queryByNumber(String number) {
-        hql = "FROM TrainEntity t WHERE t.number = ?";
-        return getSession().createQuery(hql).setParameter(0, number).list();
+    public List getall() {
+        hql = "FROM TrainEntity";
+        return getSession().createQuery(hql).list();
     }
 }

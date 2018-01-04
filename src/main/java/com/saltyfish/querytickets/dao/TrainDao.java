@@ -35,8 +35,7 @@ public interface TrainDao {
     /**
      * 查询火车余票信息
      *
-     * @param number
      * @return
      */
-    List queryByNumber(String number);
+    List getall();
 }
