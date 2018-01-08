@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * TrainStation Dao方法
  *
- * @author zjh514514
+ * @author 颜贤锋
  */
 public interface TrainStationDao {
 
@@ -39,5 +39,11 @@ public interface TrainStationDao {
      */
     void update(TrainStationEntity trainStationEntity);
 
+    /**
+     * 通过站点名获取站点信息
+     *
+     * @param name
+     * @return
+     */
     TrainStationEntity getByName(String name);
 }

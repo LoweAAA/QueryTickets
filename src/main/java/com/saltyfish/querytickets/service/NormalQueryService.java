@@ -14,7 +14,23 @@ public interface NormalQueryService {
      */
     List order(String startStation, String endStation, String type);
 
+    /**
+     * 获取中转站点
+     *
+     * @param startStation
+     * @param endStation
+     * @return
+     */
     List change(String startStation, String endStation);
 
+    /**
+     * 获取中转车次
+     *
+     * @param startStation
+     * @param endStation
+     * @param changeStation
+     * @param order
+     * @return
+     */
     List changeTrain(String startStation, String endStation, String changeStation, String order);
 }

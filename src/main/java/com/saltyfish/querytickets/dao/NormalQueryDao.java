@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 视图查询
  *
- * @author zjh514514
+ * @author 张家豪
  */
 public interface NormalQueryDao {
 
@@ -26,5 +26,12 @@ public interface NormalQueryDao {
      */
     List queryByNumber(String number);
 
+    /**
+     * 获取某列车进过某站点时间
+     *
+     * @param number
+     * @param station
+     * @return
+     */
     Date queryTime(String number, String station);
 }

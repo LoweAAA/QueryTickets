@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 火车经过的站点的Dao
  *
- * @author zjh514514
+ * @author 颜贤锋
  */
 public interface TrainPassByStationDao {
 
@@ -32,5 +32,10 @@ public interface TrainPassByStationDao {
      */
     void update(TrainPassByStationsEntity trainPassByStationsEntity);
 
+    /**
+     * 获取所有火车过站信息
+     *
+     * @return
+     */
     List getAll();
 }

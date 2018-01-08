@@ -24,6 +24,13 @@ public class NormalQueryServiceImpl implements NormalQueryService {
 
     DecimalFormat df = new DecimalFormat("#.0");
 
+    /**
+     * 获取未排序前的车次信息
+     *
+     * @param startStation
+     * @param endStation
+     * @return
+     */
     private List<Train> queryByStation(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
         List end = normalQueryDao.queryByStation(endStation);
@@ -76,6 +83,13 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         return result;
     }
 
+    /**
+     * 获取中转站点信息
+     *
+     * @param startStation
+     * @param endStation
+     * @return
+     */
     private List<String> changeQuery(String startStation, String endStation) {
         List start = normalQueryDao.queryByStation(startStation);
         List end = normalQueryDao.queryByStation(endStation);
@@ -125,6 +139,7 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         return result;
     }
 
+    @Override
     public List order(String startStation, String endStation, String type) {
         List<Train> list = queryByStation(startStation, endStation);
         switch (type) {
@@ -180,6 +195,15 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         }
     }
 
+    /**
+     * 获取未排序前中转车次
+     *
+     * @param startStation
+     * @param endStation
+     * @param changeStation
+     * @param list
+     * @throws ParseException
+     */
     private void changeList(String startStation, String endStation, String changeStation, List list) throws ParseException {
         if (changeStation.equals("")) {
             List<String> stations = changeQuery(startStation, endStation);
@@ -196,6 +220,15 @@ public class NormalQueryServiceImpl implements NormalQueryService {
         }
     }
 
+    /**
+     * 将查询结果放到ChangeTrain 实体类中
+     *
+     * @param changeStation
+     * @param list
+     * @param startTrain
+     * @param endTrain
+     * @throws ParseException
+     */
     private void changeTrainQuery(String changeStation, List list, List<Train> startTrain, List<Train> endTrain) throws ParseException {
         for (Object aStartTrain : startTrain) {
             Train train1 = (Train) aStartTrain;

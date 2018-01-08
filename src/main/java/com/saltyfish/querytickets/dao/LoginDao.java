@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 管理员登陆注册修改信息
  *
- * @author zjh514514
+ * @author 张家豪
  */
 public interface LoginDao {
 

@@ -16,7 +16,7 @@
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://hduzjh.cn:3306/trainServer?characterEncoding=utf-8"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/trainServer?characterEncoding=utf-8"/>
         <property name="user" value="trainServer"/>
         <property name="password" value="12345"/>
         <property name="maxPoolSize" value="40"/>
@@ -35,10 +35,6 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>   <!--指定数据库方言-->
                 <prop key="hibernate.show_sql">false</prop>     <!--在控制台显示执行的数据库操作语句-->
                 <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://hduzjh.cn:3306/trainServer?characterEncoding=utf-8
-                </prop>
-                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver
-                </prop>     <!--在控制台显示执行的数据哭操作语句（格式）-->
             </props>
         </property>
         <property name="mappingLocations">
@@ -60,12 +56,6 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
-
-    <aop:config>
-        <aop:pointcut expression="execution(* com.saltyfish.querytickets.dao.impl.*.*(..))"
-                      id="txPointcutImpl"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcutImpl"/>
-    </aop:config>
 
     <aop:config>
         <aop:pointcut expression="execution(* com.saltyfish.querytickets.service.serviceimpl.*.*(..))"

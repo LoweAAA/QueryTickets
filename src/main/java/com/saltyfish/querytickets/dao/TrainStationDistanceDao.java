@@ -5,6 +5,11 @@ import com.saltyfish.querytickets.model.TrainStationEntity;
 
 import java.util.List;
 
+/**
+ * 管理车站距离
+ *
+ * @author 颜贤锋
+ */
 public interface TrainStationDistanceDao {
 
     /**
