@@ -15,7 +15,7 @@
     </context:component-scan>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://hduzjh.cn:3306/trainServer?characterEncoding=utf-8"/>
         <property name="user" value="trainServer"/>
         <property name="password" value="12345"/>
